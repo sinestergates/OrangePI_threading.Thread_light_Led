@@ -2,12 +2,11 @@
 
 
 
-# import RPi.GPIO as GPIO
-#import wiringpi
-from tkinter import * #Tk, Label, Button, Frame, mainloop,messagebox
+
+import wiringpi
 from threading import Thread
 import time
-#from wiringpi import GPIO
+from wiringpi import GPIO
 import psycopg2
 from configparser import ConfigParser
 import threading
@@ -15,7 +14,7 @@ import csv
 from loguru import logger
 import datetime
 
-'''wiringpi.wiringPiSetup()
+wiringpi.wiringPiSetup()
 
 
 def light_on(light_pin):
@@ -23,7 +22,7 @@ def light_on(light_pin):
     wiringpi.pinMode(light_pin, GPIO.OUTPUT)
     wiringpi.digitalWrite((light_pin), GPIO.HIGH)
 
-    # GPIO.cleanup(light_pin)
+    
     print(light_pin)
 
 
@@ -32,13 +31,13 @@ def light_off(light_pin):
     wiringpi.pinMode(light_pin, GPIO.OUTPUT)
     wiringpi.digitalWrite((light_pin), GPIO.LOW)
 
-    # GPIO.cleanup(light_pin)
+    
     print(light_pin)
 
 
-# wiringpi.wiringPiSetup()
+
 def flash(light_pin, sleep=0.25, count=2):
-    # wiringpi.wiringPiSetup()
+    
 
     for i in range(count):
         light_off(light_pin)
@@ -48,7 +47,8 @@ def flash(light_pin, sleep=0.25, count=2):
 
         time.sleep(sleep)
     print(light_pin)
-'''
+
+
 def load_list():
     with open("list.csv") as fp:
         reader = csv.reader(fp, delimiter=",", quotechar='"')
@@ -56,8 +56,6 @@ def load_list():
         return data_read
 
 
-#list_pin = [[1, 12, 9, 2], [5, 0,6, 16], [11, 7, 13, 4], [10, 8, 15, 3]]
-# list_pin=[[17,4,27,22],[10,9,5,6],[13,19,26,15],[21,16,20,21]]
 
 
 
@@ -108,7 +106,7 @@ def RideTheLight(name_table):
         if a == []:
             pass
         else:
-            rack = 1  # по умолчанию ставлю стелаж пока 1 так как у нас только один
+            rack = 1  # по умолчанию ставлю стелаж пока 1 
             now = datetime.datetime.now()
             rack_col = a[0][3]
 
@@ -121,9 +119,9 @@ def RideTheLight(name_table):
             except BaseException as eror :
                 logger.add('debug.log',format='{time} {level} {message}')
                 logger.debug(f'{eror}__rack_col:{rack_col} rack_row:{rack_row}(debug)')
-                #print(f'rack_col:{rack_col} rack_row:{rack_row}')
+                
 
-            #flash(int(pin))
+            flash(int(pin))
             db_with_commit(f'TRUNCATE "{name_table}"', '')
 
         time.sleep(0.5)
